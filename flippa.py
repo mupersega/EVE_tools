@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import time
 
 import cfg
 from my_funcs import step_show as ss
@@ -30,6 +31,7 @@ class Flippa:
 			hub_id = cfg.regions[region]['hub id']
 			# import this i orders
 			region_orders = pd.read_csv(f'local_data/{region}_orders.csv')
+			print(f'{region}:{region_orders.shape}')
 			# filter by hub
 			print(f'- FILTERING: {region.title()} to hub only')
 			region_orders = region_orders.query(f'location_id == {hub_id}')
@@ -39,6 +41,8 @@ class Flippa:
 			print(f'- - - LOADING: {region.title()} sell orders')
 			self.market_orders[region]['sell_orders'] = region_orders.query('is_buy_order == False')
 			print(f'- - - - {region.upper()} COMPLETE')
+		time.sleep(5)
+
 
 	def load_all_mins_and_maxes(self):
 		self.step += 1

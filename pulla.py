@@ -11,28 +11,16 @@ import cfg
 data_path = 'local_data/'
 # request info
 
-params = {
-	'datasource': 'tranquility',
-	'order_type': 'all',
-	'page': 0
-}
+# params = {
+# 	'datasource': 'tranquility',
+# 	'order_type': 'all',
+# 	'page': 0
+# }
 final_write = {}
 PAGE_COUNT = 1
 
 Q = queue.Queue()
 
-
-def query(stem, page):
-	params["page"] = page
-	response = requests.get(stem, params=params)
-	# print(response.url)
-	print(response.status_code)
-	if response.status_code == 200:
-		json_response = response.json()
-		# final_write[f'page_{page}'] = new_page
-		Q.put([page, json_response])
-	else:
-		return
 
 def get_regions_threaded(region):
 	# build a name for the file from the region specified and clear/create.
@@ -52,17 +40,31 @@ def get_regions_threaded(region):
 		resp = Q.get()
 		final_write[f'page_{resp[0]}'] = resp[1]
 		print(f'page{resp[0]}')
+	
+	time.sleep(3)
 
 	# write json
 	with open(file, "a") as write_file:
 		json.dump(final_write, write_file, indent=4)
 
-	# print(final_write.keys())
-	print(Q.task_done())
 	print(f'{region}:{len(final_write.keys())} pages')
 
 	convert_json_to_csv(file)
 	print(f'{region.title()} market orders complete.')
+	final_write.clear()
+	time.sleep(3)
+
+def query(stem, page):
+	params = {'datasource': 'tranquility', 'order_type': 'all', "page": page}
+	response = requests.get(stem, params=params)
+	# print(response.url)
+	print(response.status_code)
+	if response.status_code == 200:
+		json_response = response.json()
+		# final_write[f'page_{page}'] = new_page
+		Q.put([page, json_response])
+	else:
+		return
 
 
 def convert_json_to_csv(json_file):

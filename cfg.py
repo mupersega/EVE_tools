@@ -7,7 +7,7 @@ regions = {
 	'metropolis': {
 		'region id': 10000042,
 		'hub id': 60005686,
-		'pages': 100
+		'pages': 110
 	},
 	'sinq laison': {
 		'region id': 10000032,
