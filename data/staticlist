@@ -1,0 +1,6 @@
+These are the files that must be stored and updated.
+Other dynamic data must be loaded locally.
+
+invTypes.csv
+invTypeMaterials.csv
+industryActivityProducts.csv
