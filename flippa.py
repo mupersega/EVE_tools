@@ -14,7 +14,7 @@ class Flippa:
 	def __init__(self, lookup_regions: list):
 		self.regions = lookup_regions
 		self.step = 0
-		self.x_percent = 1.08
+		self.x_percent = .90
 
 		self.invTypes = pd.read_csv('data/invTypes.csv')
 		self.invTypes = self.invTypes[['typeID', 'typeName', 'portionSize', 'marketGroupID']]
@@ -104,7 +104,7 @@ class Flippa:
 				sp = mmin_sell[type_id]
 				try:
 					bp = mmax_buys[type_id]
-					if sp < bp:
+					if sp * self.x_percent < bp:
 						self.opportunities.append(type_id)
 				except:
 					pass

@@ -45,7 +45,7 @@ def get_regions_threaded(region):
 
 	# write json
 	with open(file, "a") as write_file:
-		json.dump(final_write, write_file, indent=4)
+		json.dump(final_write, write_file)
 
 	print(f'{region}:{len(final_write.keys())} pages')
 
@@ -53,6 +53,7 @@ def get_regions_threaded(region):
 	print(f'{region.title()} market orders complete.')
 	final_write.clear()
 	time.sleep(3)
+
 
 def query(stem, page):
 	params = {'datasource': 'tranquility', 'order_type': 'all', "page": page}
