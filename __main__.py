@@ -1,3 +1,4 @@
+
 import pulla as api
 import flippa
 import skrappa
@@ -6,14 +7,14 @@ import skrappa
 #### problem with sell to locations!!!
 if __name__ == '__main__':
 
-	pull = False
-	flip = True
+	pull = True
+	flip = False
 	scrap = False
 
 	# pull info
 	pull_regions = ['heimatar', 'metropolis']
 	# flip info
-	flip_regions = ['heimatar', 'domain', 'sinq laison', 'the forge', 'metropolis']
+	flip_regions = ['heimatar', 'domain']
 	flip_update_regions = True
 	# scrap info
 	buy_from_region = 'sinq laison'

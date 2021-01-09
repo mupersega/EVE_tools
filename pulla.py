@@ -8,7 +8,7 @@ import requests
 
 import cfg
 
-data_path = 'data/'
+data_path = 'local_data/'
 # request info
 
 params = {
@@ -40,8 +40,7 @@ def get_regions_threaded(region):
 	stem = f'https://esi.evetech.net/latest/markets/{cfg.regions[region]["region id"]}/orders/?'
 	file_name = f'{region}_orders.json'
 	file = data_path + file_name
-	open(file, "w")
-	time.sleep(3)
+	open(file, "w+")
 	threads = []
 	for i in range(cfg.regions[region]['pages']):
 		x = threading.Thread(target=query, args=(stem, i,))
@@ -68,41 +67,6 @@ def get_regions_threaded(region):
 	print(f'{region.title()} market orders complete.')
 
 
-# def get_region_orders(region, order_type='all'):
-# 	"""Pull market orders in a region, 1 page at a time."""
-# 	# set correct params
-# 	params['order_type'] = 'order_type'
-# 	# build a name for the file from the region specified and clear/create.
-# 	file_name = f'{region}_orders.json'
-# 	file = data_path + file_name
-# 	open(file, "w")
-# 	time.sleep(3)
-#
-# 	# manage loop state and prepare final json write dict
-# 	done = False
-#
-# 	# request loop
-# 	while not done:
-# 		response = requests.get(stem, params=params)
-# 		print(response.url)
-# 		new_page = response.json()
-# 		final_write[f'page_{params["page"]}'] = new_page
-# 		if len(new_page) < 1000:
-# 			done = True
-# 			print('Preparing json and csv files.')
-# 		else:
-# 			print(f'page {params["page"]} completed successfully.')
-# 			params['page'] += 1
-#
-# 	# write json
-# 	with open(file, "a") as write_file:
-# 		json.dump(final_write, write_file, indent=4)
-#
-# 	time.sleep(3)
-#
-# 	convert_json_to_csv(file)
-# 	print(f'{region.title()} market orders complete.')
-
 def convert_json_to_csv(json_file):
 	# convert json to csv
 	file = json_file
@@ -128,4 +92,3 @@ def convert_json_to_csv(json_file):
 				count += 1
 
 			csvwriter.writerow(row.values())
-

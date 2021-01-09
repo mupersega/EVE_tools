@@ -37,8 +37,8 @@ class Skrappa:
 
 		self.materials = pd.read_csv('data/invTypeMaterials.csv')
 		self.invTypes = pd.read_csv('data/invTypes.csv')
-		self.all_buy_region_orders = pd.read_csv(f'data/{buy_region.lower()}_orders.csv')
-		self.all_sell_region_orders = pd.read_csv(f'data/{sell_region.lower()}_orders.csv')
+		self.all_buy_region_orders = pd.read_csv(f'local_data/{buy_region.lower()}_orders.csv')
+		self.all_sell_region_orders = pd.read_csv(f'local_data/{sell_region.lower()}_orders.csv')
 		self.sell_orders = None
 		self.buy_orders = None
 		self.q = queue.Queue()
@@ -172,15 +172,15 @@ class Skrappa:
 
 	def prep_final_opportunities(self):
 		self.step += 1
-		os.remove('latest_scrap.txt')
-		with open('latest_scrap.txt', 'a') as text_file:
+		open('local_data/latest_scrap.txt', 'w+')
+		with open('local_data/latest_scrap.txt', 'a') as text_file:
 			paste_string = ""
 			for i in sorted(self.opportunities.keys()):
 				text_file.write(
 					f'{self.opportunities[i]["volume"]} {i.upper()} below {self.opportunities[i]["buy below"]}\n')
 				paste_string += i + '\n'
 			pyperclip.copy(paste_string)
-		os.startfile('latest_scrap.txt')
+		os.startfile('local_data/latest_scrap.txt')
 
 	def main(self):
 		start_time = datetime.now()

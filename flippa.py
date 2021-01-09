@@ -29,7 +29,7 @@ class Flippa:
 		for region in self.regions:
 			hub_id = cfg.regions[region]['hub id']
 			# import this i orders
-			region_orders = pd.read_csv(f'data/{region}_orders.csv')
+			region_orders = pd.read_csv(f'local_data/{region}_orders.csv')
 			# filter by hub
 			print(f'- FILTERING: {region.title()} to hub only')
 			region_orders = region_orders.query(f'location_id == {hub_id}')
@@ -167,7 +167,7 @@ class Flippa:
 
 	def present_purchase_orders(self):
 		self.step += 1
-		open('z_flip.txt', 'w+')
+		open('local_data/flip.txt', 'w+')
 		with open('z_flip.txt', 'a') as text_file:
 			for region in sorted(self.purchase_orders.keys()):
 				text_file.write(f'\n-<|{region.upper()}|>-\n')
@@ -180,7 +180,7 @@ class Flippa:
 					text_file.write(f'{item.title()} \n')
 					text_file.write(f'\tBUY |{buy_amt}|@|{buy_below}ISK|\n')
 					text_file.write(f'\tSELL |{sell_at}ISK|@|{sell_to.title()}|\n')
-		os.startfile('z_flip.txt')
+		os.startfile('local_data/flip.txt')
 		# for i in self.purchase_orders.keys():
 		# 	print(f'{i}: {self.purchase_orders[i]}')
 
