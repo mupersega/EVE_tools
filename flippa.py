@@ -100,10 +100,10 @@ class Flippa:
 				sp = mmin_sell[type_id]
 				try:
 					bp = mmax_buys[type_id]
-				except KeyError:
+					if sp < bp:
+						self.opportunities.append(type_id)
+				except:
 					pass
-				if sp < bp:
-					self.opportunities.append(type_id)
 		print(len(self.opportunities))
 		print(self.opportunities)
 
@@ -124,13 +124,14 @@ class Flippa:
 			self.purchase_orders[pr] = {}
 			sell_orders = self.market_orders[pr]['sell_orders']
 			reg_buy_orders = []
+			r_list = []
 			# prep reg orders by dropping all other region buy order dfs in there for loop later
 			for other_region in self.regions:
 				if other_region == pr:
 					pass
 				else:
-					other = other_region
-					reg_buy_orders.append(self.market_orders[other]['buy_orders'])
+					r_list.append(other_region)
+					reg_buy_orders.append(self.market_orders[other_region]['buy_orders'])
 			counted_order_ids = []
 			for v in sell_orders.values:
 				type_id = v[9]
@@ -138,6 +139,7 @@ class Flippa:
 				vol = v[10]
 				order_id = v[5]
 				type_name = self.invTypes.loc[type_id][0]
+				r_count = 0
 				for df in reg_buy_orders:
 					matches = df[df['type_id'] == type_id]
 					for match in matches.values:
@@ -149,7 +151,7 @@ class Flippa:
 							if type_name not in self.purchase_orders[pr].keys():
 								self.purchase_orders[pr][type_name] = {
 									'buy_below': price,
-									'sell to': other,
+									'sell to': r_list[r_count],
 									'sell_at': m_price,
 									'buy_amt': m_vol,
 									'min_volume': m_min_volume,
@@ -164,11 +166,14 @@ class Flippa:
 								if m_order_id not in counted_order_ids:
 									self.purchase_orders[pr][type_name]['buy_amt'] += m_vol
 									counted_order_ids.append(m_order_id)
+					r_count += 1
 
 	def present_purchase_orders(self):
 		self.step += 1
+		if len(self.purchase_orders) < 1:
+			ss(self.step, "NO OPPORTUNITIES")
 		open('local_data/flip.txt', 'w+')
-		with open('z_flip.txt', 'a') as text_file:
+		with open('local_data/flip.txt', 'a') as text_file:
 			for region in sorted(self.purchase_orders.keys()):
 				text_file.write(f'\n-<|{region.upper()}|>-\n')
 				for item in self.purchase_orders[region].keys():
@@ -180,7 +185,7 @@ class Flippa:
 					text_file.write(f'{item.title()} \n')
 					text_file.write(f'\tBUY |{buy_amt}|@|{buy_below}ISK|\n')
 					text_file.write(f'\tSELL |{sell_at}ISK|@|{sell_to.title()}|\n')
-		os.startfile('local_data/flip.txt')
+		os.startfile(r'local_data\flip.txt')
 		# for i in self.purchase_orders.keys():
 		# 	print(f'{i}: {self.purchase_orders[i]}')
 

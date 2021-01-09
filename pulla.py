@@ -31,6 +31,8 @@ def query(stem, page):
 		json_response = response.json()
 		# final_write[f'page_{page}'] = new_page
 		Q.put([page , json_response])
+	if response.status_code == 420:
+		return
 	else:
 		return
 
@@ -58,8 +60,7 @@ def get_regions_threaded(region):
 		json.dump(final_write, write_file, indent=4)
 
 	# print(final_write.keys())
-	print(f'{len(final_write.keys())} pages')
-	cfg.regions[region]['pages'] = len(final_write.keys()) + 10
+	print(f'{region+":"+len(final_write.keys()) * 1000} orders roughly.')
 
 	time.sleep(3)
 

@@ -7,14 +7,14 @@ import skrappa
 #### problem with sell to locations!!!
 if __name__ == '__main__':
 
-	pull = True
+	pull = False
 	flip = False
-	scrap = False
+	scrap = True
 
 	# pull info
-	pull_regions = ['heimatar', 'metropolis']
+	pull_regions = ['tash-murkon', 'metropolis']
 	# flip info
-	flip_regions = ['heimatar', 'domain']
+	flip_regions = ['domain', 'heimatar', 'metropolis', 'sinq laison', 'the forge']
 	flip_update_regions = True
 	# scrap info
 	buy_from_region = 'sinq laison'
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 	isk_threshold = 1000
 	percent_return = 10
 	ores_only = False
-	update_regions = True
+	update_regions = False
 
 	if pull:
 		for i in pull_regions:

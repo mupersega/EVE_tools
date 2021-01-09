@@ -9,13 +9,6 @@ import pyperclip
 import cfg
 from my_funcs import step_show as ss
 
-SALES_TAX = .028
-REPRO_TAX = .028
-ORE_EFFICIENCY = .632
-MOD_EFFICIENCY = .54
-MIN_PERCENT_RETURN = 8
-MIN_DIFF = 10
-
 
 class Skrappa:
 	"""Scan all current market orders in region and see if they are listed below repro value."""
@@ -180,7 +173,7 @@ class Skrappa:
 					f'{self.opportunities[i]["volume"]} {i.upper()} below {self.opportunities[i]["buy below"]}\n')
 				paste_string += i + '\n'
 			pyperclip.copy(paste_string)
-		os.startfile('local_data/latest_scrap.txt')
+		os.startfile('local_data\latest_scrap.txt')
 
 	def main(self):
 		start_time = datetime.now()
