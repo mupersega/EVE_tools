@@ -4,3 +4,4 @@ Other dynamic data must be loaded locally.
 invTypes.csv
 invTypeMaterials.csv
 industryActivityProducts.csv
+industryActivityMaterials.csv
