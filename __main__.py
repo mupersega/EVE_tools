@@ -6,16 +6,17 @@ import skrappa
 
 if __name__ == '__main__':
 
-	pull = False
+	pull = True
 
-	flip = True
+	flip = False
 	flip_update_regions = True
+	flip_all = True
 
 	scrap = False
 	scrap_update_regions = True
 
 	# pull info
-	pull_regions = ['domain', 'heimatar']
+	pull_regions = ['heimatar']
 	# flip info
 	flip_regions = ['domain', 'heimatar']
 	# scrap info
@@ -27,6 +28,8 @@ if __name__ == '__main__':
 	percent_return = 10
 	ores_only = False
 
+
+	all_regions = ['heimatar', 'domain', 'the forge', 'metropolis', 'sinq laison']
 	if pull:
 		for i in pull_regions:
 			pulla.get_regions_threaded(i)
@@ -42,6 +45,8 @@ if __name__ == '__main__':
 
 	if flip:
 		if flip_update_regions:
+			if flip_all:
+				flip_regions = all_regions
 			for i in set(flip_regions):
 				pulla.get_regions_threaded(i)
 		new_flip = flippa.Flippa(flip_regions)
