@@ -14,7 +14,7 @@ class Flippa:
 	def __init__(self, lookup_regions: list):
 		self.regions = lookup_regions
 		self.step = 0
-		self.x_percent = .90
+		self.x_percent = 1
 
 		self.invTypes = pd.read_csv('data/invTypes.csv')
 		self.invTypes = self.invTypes[['typeID', 'typeName', 'portionSize', 'marketGroupID']]

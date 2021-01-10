@@ -10,18 +10,18 @@ if __name__ == '__main__':
 	# ____PULLA____ #
 	pull = 0
 	# ____FLIPPA____ #
-	flip = 1
+	flip = 0
 	# ___SKRAPPA___ #
-	scrap = 0
+	scrap = 1
 
 	# pull info
 	pull_regions = ['heimatar']
 	# flip info
-	flip_regions = ['domain', 'heimatar']
+	flip_regions = ['domain', 'the forge']
 	# scrap info
-	buy_from_region = 'sinq laison'
+	buy_from_region = 'the forge'
 	buy_from = 'hub'
-	sell_to_region = 'sinq laison'
+	sell_to_region = 'the forge'
 	sell_to = 'hub'
 	isk_threshold = 1000
 	percent_return = 10
@@ -39,9 +39,8 @@ if __name__ == '__main__':
 	if scrap:
 		scrap_regions = [buy_from_region, sell_to_region]
 		if update_all:
-			for i in set(scrap_regions):
-				new_pulla = pulla.Pulla(scrap_regions)
-				new_pulla.main()
+			new_pulla = pulla.Pulla(scrap_regions)
+			new_pulla.main()
 		new_scrap = skrappa.Skrappa(
 			buy_from_region, buy_from, sell_to_region, sell_to, ores_only, percent_return, isk_threshold)
 		new_scrap.main()
@@ -49,7 +48,7 @@ if __name__ == '__main__':
 	if flip:
 		if update_all:
 			flip_regions = all_regions
-		for i in set(flip_regions):
+		else:
 			new_pulla = pulla.Pulla(flip_regions)
 			new_pulla.main()
 		new_flip = flippa.Flippa(flip_regions)
