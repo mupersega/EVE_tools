@@ -6,15 +6,13 @@ import skrappa
 
 if __name__ == '__main__':
 
-	update_all = True
+	update_all = 1
 	# ____PULLA____ #
 	pull = 0
 	# ____FLIPPA____ #
-	flip = 0
-	flip_update_regions = 0
+	flip = 1
 	# ___SKRAPPA___ #
-	scrap = 1
-	scrap_update_regions = 1
+	scrap = 0
 
 	# pull info
 	pull_regions = ['heimatar']
@@ -40,7 +38,7 @@ if __name__ == '__main__':
 
 	if scrap:
 		scrap_regions = [buy_from_region, sell_to_region]
-		if scrap_update_regions:
+		if update_all:
 			for i in set(scrap_regions):
 				new_pulla = pulla.Pulla(scrap_regions)
 				new_pulla.main()
@@ -49,11 +47,10 @@ if __name__ == '__main__':
 		new_scrap.main()
 
 	if flip:
-		if flip_update_regions:
-			if update_all:
-				flip_regions = all_regions
-			for i in set(flip_regions):
-				new_pulla = pulla.Pulla(flip_regions)
-				new_pulla.main()
+		if update_all:
+			flip_regions = all_regions
+		for i in set(flip_regions):
+			new_pulla = pulla.Pulla(flip_regions)
+			new_pulla.main()
 		new_flip = flippa.Flippa(flip_regions)
 		new_flip.main()
