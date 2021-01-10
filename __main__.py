@@ -6,12 +6,13 @@ import skrappa
 
 if __name__ == '__main__':
 
+	update_all = True
+	# ____PULLA____ #
 	pull = True
-
 	flip = False
+	# ____FLIPPA____ #
 	flip_update_regions = True
-	flip_all = True
-
+	# ___SKRAPPA___ #
 	scrap = False
 	scrap_update_regions = True
 
@@ -28,11 +29,14 @@ if __name__ == '__main__':
 	percent_return = 10
 	ores_only = False
 
-
 	all_regions = ['heimatar', 'domain', 'the forge', 'metropolis', 'sinq laison']
+
 	if pull:
-		for i in pull_regions:
-			pulla.get_regions_threaded(i)
+		if update_all:
+			# noinspection PyRedeclaration
+			pull_regions = all_regions
+			new_pulla = pulla.Pulla(pull_regions)
+			new_pulla.main()
 
 	if scrap:
 		scrap_regions = [buy_from_region, sell_to_region]
@@ -45,7 +49,7 @@ if __name__ == '__main__':
 
 	if flip:
 		if flip_update_regions:
-			if flip_all:
+			if update_all:
 				flip_regions = all_regions
 			for i in set(flip_regions):
 				pulla.get_regions_threaded(i)
